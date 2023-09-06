@@ -87,7 +87,7 @@
   
 <script>
 import axios from "axios";
-import NavigationButtons from './NavigationButtons.vue';
+import NavigationButtons from '../components/NavigationButtons.vue';
 
 export default {
     components: {

@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-left">
         <div class="logo">
-          <span>CAMPOS TESTE</span>
+          <span>CAMPOS DEVELOPERS</span>
         </div>
       </div>
       <div class="header-right">
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="form-container">
-    <h1 class="form-title">Cadastro de Empresas</h1>
+    <h1 class="form-title">Emissão de boleto</h1>
     <form class="custom-form" @submit.prevent="submitForm">
       <div class="columns is-desktop">
         <label class="form-label" for="name">Nome da Empresa: *</label>
