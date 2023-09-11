@@ -45,10 +45,10 @@
                 <input class="form-input" type="text" id="status" v-model="form.status" />
             </div>
             <div class="columns is-desktop" v-for="(base64String, index) in form.base64_strings" :key="index">
-                <label class="form-label" for="base64_strings">Imagem {{ index + 1 }}:</label>
-                <input class="form-input" type="file" id="base64_strings" @change="handleFileUpload(index)" />
+                <label class="form-label" :for="'base64_strings_' + index">Imagem {{ index + 1 }}:</label>
+                <input class="form-input" :id="'base64_strings_' + index" type="file"
+                    @change="handleFileUpload(index, $event)" />
                 <button @click="removeFileUpload(index)">Remover</button>
-                <img :src="'data:image/png;base64,' + base64String" v-if="base64String" />
             </div>
             <button @click.prevent="addFileUpload()">Adicionar</button>
             <button class="submit-button" type="submit">Enviar</button>
