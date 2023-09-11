@@ -1,83 +1,21 @@
 <template>
   <div class="page-container">
-    <div class="header">
-      <div class="header-left">
-        <div class="logo">
-          <span>CAMPOS DEVELOPERS</span>
-        </div>
-      </div>
-      <div class="header-right">
-        <button class="header-button">Botão 1</button>
-        <button class="header-button">Botão 2</button>
-        <button class="header-button">Botão 3</button>
-        <div class="profile-icon">
-          <i class="fas fa-user-circle"></i>
-        </div>
-      </div>
-    </div>
+        <Header />
   </div>
   <div class="form-container">
     <h1 class="form-title">Emissão de boleto</h1>
     <form class="custom-form" @submit.prevent="submitForm">
       <div class="columns is-desktop">
-        <label class="form-label" for="name">Nome da Empresa: *</label>
-        <input class="form-input" type="text" id="name" v-model="form.name" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="email">Email: *</label>
-        <input class="form-input" type="email" id="email" v-model="form.email" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="cpf_cnpj">CPF/CNPJ: *</label>
+        <label class="form-label" for="cpf_cnpj">CPF do pagador: *</label>
         <input class="form-input" type="text" id="cpf_cnpj" v-model="form.cpf_cnpj" required />
       </div>
       <div class="columns is-desktop">
-        <label class="form-label" for="birth_date">Data de Fundação:</label>
-        <input class="form-input" type="date" id="birth_date" v-model="form.birth_date" />
+        <label class="form-label" for="value">Valor do boleto: *</label>
+        <input class="form-input" type="number" id="value" v-model="form.value" required />
       </div>
       <div class="columns is-desktop">
-        <label class="form-label" for="phone">Telefone: *</label>
-        <input class="form-input" type="tel" id="phone" v-model="form.phone" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="mobile_phone">Celular:</label>
-        <input class="form-input" type="tel" id="mobile_phone" v-model="form.mobile_phone" />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="address">Endereço: *</label>
-        <input class="form-input" type="text" id="address" v-model="form.address" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="address_number">Número: *</label>
-        <input class="form-input" type="text" id="address_number" v-model="form.address_number" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="complement">Complemento: *</label>
-        <input class="form-input" type="text" id="complement" v-model="form.complement" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="postal_code">CEP: *</label>
-        <input class="form-input" type="text" id="postal_code" v-model="form.postal_code" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="city">Cidade: *</label>
-        <input class="form-input" type="text" id="city" v-model="form.city" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="province">Bairro: *</label>
-        <input class="form-input" type="text" id="province" v-model="form.province" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="state">Estado: *</label>
-        <input class="form-input" type="text" id="state" v-model="form.state" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="country">País: *</label>
-        <input class="form-input" type="text" id="country" v-model="form.country" required />
-      </div>
-      <div class="columns is-desktop">
-        <label class="form-label" for="site">Site:</label>
-        <input class="form-input" type="text" id="site" v-model="form.site" />
+        <label class="form-label" for="due_date">Data de vencimento: *</label>
+        <input class="form-input" type="date" id="due_date" v-model="form.due_date" required />
       </div>
       <button class="submit-button" type="submit">Enviar</button>
     </form>
@@ -86,61 +24,27 @@
 
 <script>
 import axios from "axios";
+import Header from '../components/Header.vue';
 
 export default {
+  components: {
+    Header,
+  },
   data() {
     return {
       form: {
-        pk: "COMPANY#",
-        sk: "COMPANY",
-        name: "",
-        email: "",
         cpf_cnpj: "",
-        birth_date: "",
-        phone: "",
-        mobile_phone: "",
-        address: "",
-        address_number: "",
-        complement: "",
-        postal_code: "",
-        city: "",
-        province: "",
-        state: "",
-        country: "",
-        site: "",
+        value: "",
+        due_date: "",
       },
+      customers: [],
     };
   },
-  methods: {
-    async submitForm() {
-      try {
-        const response = await axios.post(
-          "https://azmvwgnrk8.execute-api.us-east-1.amazonaws.com/dev",
-          this.form,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = response.data;
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
-  watch: {
-    "form.cpf_cnpj": function (newCnpj) {
-      const numericCnpj = newCnpj.replace(/\D/g, "");
-      this.form.pk = `COMPANY#${numericCnpj}`;
-    },
-  },
-};
+}
+
 </script>
 
 <style>
-/* Estilizando o container da página */
 .page-container {
     max-width: 800px;
     margin: 0 auto;
@@ -149,7 +53,6 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
 
-  /* Estilizando o cabeçalho */
   .header {
     display: flex;
     justify-content: space-between;
@@ -172,7 +75,6 @@ export default {
     margin-right: 20px;
   }
 
-  /* Estilizando os botões do cabeçalho */
   .header-button {
     background-color: transparent;
     border: none;
@@ -186,11 +88,10 @@ export default {
     margin-right: 0;
   }
 
-  /* Estilizando o ícone de perfil */
   .profile-icon {
     font-size: 24px;
   }
-  /* Estilizando o container do formulário */
+
   .form-container {
     max-width: 800px;
     margin: 0 auto;
@@ -200,7 +101,6 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
 
-  /* Estilizando o título do formulário */
   .form-title {
     font-size: 24px;
     text-align: center;
@@ -208,7 +108,6 @@ export default {
     color: #333;
   }
 
-  /* Estilizando as colunas e rótulos */
   .columns {
     margin-bottom: 10px;
   }
@@ -220,7 +119,6 @@ export default {
     color: #555;
   }
 
-  /* Estilizando os campos de entrada */
   .form-input {
     width: 100%;
     padding: 10px;
@@ -229,7 +127,6 @@ export default {
     font-size: 16px;
   }
 
-  /* Estilizando o botão de envio */
   .submit-button {
     background-color: #007bff;
     color: #fff;
@@ -245,7 +142,6 @@ export default {
     background-color: #0056b3;
   }
 
-  /* Estilizando mensagens de erro */
   .error-message {
     color: #f00;
     font-size: 14px;

@@ -1,20 +1,6 @@
 <template>
     <div class="page-container">
-        <div class="header">
-            <div class="header-left">
-                <div class="logo">
-                    <span>CAMPOS DEVELOPERS</span>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="header-button">Botão 1</button>
-                <button class="header-button">Botão 2</button>
-                <button class="header-button">Botão 3</button>
-                <div class="profile-icon">
-                    <i class="fas fa-user-circle"></i>
-                </div>
-            </div>
-        </div>
+        <Header />
     </div>
     <div class="form-container">
         <h1 class="form-title">Cadastro de Empresas</h1>
@@ -86,12 +72,12 @@
 </template>
   
 <script>
-import axios from "axios";
-import NavigationButtons from '../components/NavigationButtons.vue';
+import {api} from "../services"
+import Header from '../components/Header.vue';
 
 export default {
     components: {
-        NavigationButtons,
+        Header,
     },
     data() {
         return {
@@ -117,22 +103,14 @@ export default {
         };
     },
     methods: {
-        async submitForm() {
-            try {
-                const response = await axios.post(
-                    "https://azmvwgnrk8.execute-api.us-east-1.amazonaws.com/dev",
-                    this.form,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }
-                );
-                const data = response.data;
-                console.log(data);
-            } catch (error) {
-                console.error(error);
-            }
+        submitForm() {
+            api.post("", this.form).then((response) => {
+                if (response && response.status == 201){
+
+                } else {
+                    console.error(error);        
+                }
+            });
         },
     },
     watch: {
@@ -145,17 +123,15 @@ export default {
 </script>
   
 <style>
-/* Estilizando o container da página */
 .page-container {
     font-family: Arial, Helvetica, sans-serif;
-    max-width: 800px;
+    max-width: 4000px;
     margin: 0 auto;
     background-color: #f7f7f7;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilizando o cabeçalho */
 .header {
     display: flex;
     justify-content: space-between;
@@ -172,13 +148,6 @@ export default {
     align-items: center;
 }
 
-.logo {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 20px;
-}
-
-/* Estilizando os botões do cabeçalho */
 .header-button {
     background-color: transparent;
     border: none;
@@ -192,12 +161,10 @@ export default {
     margin-right: 0;
 }
 
-/* Estilizando o ícone de perfil */
 .profile-icon {
     font-size: 24px;
 }
 
-/* Estilizando o container do formulário */
 .form-container {
     font-family: Arial, Helvetica, sans-serif;
     max-width: 800px;
@@ -208,7 +175,6 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilizando o título do formulário */
 .form-title {
     font-size: 24px;
     text-align: center;
@@ -216,7 +182,6 @@ export default {
     color: #333;
 }
 
-/* Estilizando as colunas e rótulos */
 .columns {
     margin-bottom: 10px;
 }
@@ -228,7 +193,6 @@ export default {
     color: #555;
 }
 
-/* Estilizando os campos de entrada */
 .form-input {
     width: 100%;
     padding: 10px;
@@ -237,7 +201,6 @@ export default {
     font-size: 16px;
 }
 
-/* Estilizando o botão de envio */
 .submit-button {
     background-color: #007bff;
     color: #fff;
@@ -253,10 +216,8 @@ export default {
     background-color: #0056b3;
 }
 
-/* Estilizando mensagens de erro */
 .error-message {
     color: #f00;
     font-size: 14px;
 }
 </style>
-  

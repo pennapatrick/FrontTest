@@ -15,7 +15,6 @@
 export default {
     methods: {
         navigateTo(route) {
-            // Use o método $router.push() para navegar para a rota desejada
             this.$router.push(route);
         },
     },
